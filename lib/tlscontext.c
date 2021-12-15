@@ -213,19 +213,19 @@ tls_session_verify(TLSSession *self, int ok, X509_STORE_CTX *ctx)
       X509_STORE_CTX_set_error(ctx, X509_V_ERR_CERT_UNTRUSTED);
       return 0;
     }
-  /* if the crl_dir is set in the configuration file but the directory is empty ignore this error */
+  /* if the crl_dir is set in the configuration, then a missing CRL is fatal*/
   if (!ok && X509_STORE_CTX_get_error(ctx) == X509_V_ERR_UNABLE_TO_GET_CRL)
     {
-      msg_notice("CRL directory is set but no CRLs found",
+      msg_notice("CRL directory is set and one of the CRLs are missing, rejecting",
                  tls_context_format_location_tag(self->ctx));
-      return 1;
+      return 0;
     }
 
   if (!ok && X509_STORE_CTX_get_error(ctx) == X509_V_ERR_INVALID_PURPOSE)
     {
-      msg_warning("Certificate valid, but purpose is invalid",
+      msg_warning("Certificate valid, but purpose is invalid, rejecting",
                   tls_context_format_location_tag(self->ctx));
-      return 1;
+      return 0;
     }
   return ok;
 }
