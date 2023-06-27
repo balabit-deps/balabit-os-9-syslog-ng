@@ -1,3 +1,9 @@
+syslog-ng (3.35.1-1bb1) jammy; urgency=medium
+
+  * Balabit patched version
+
+ -- Balabit Platform Team <devnull@dev.null>  Tue, 27 Jun 2023 11:55:29 +0200
+
 syslog-ng (3.35.1-1) unstable; urgency=medium
 
   * Enable pristine-tar branchwide
